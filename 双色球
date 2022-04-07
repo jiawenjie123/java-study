@@ -1,0 +1,97 @@
+package Test;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class test8双色球 {
+    public static void main(String[] args) {
+        int[]create=create();
+        int[] user=user();
+        judge(create,user);
+    }
+    public static void print(int a[])
+    {
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(i==a.length-1 ? a[i]:a[i]+" ");
+        }
+    }
+    public static int[] create() {
+        int[] a = new int[7];
+        Random r = new Random();
+        for (int i = 0; i < a.length - 1; i++) {
+            while (true) {
+                int data = r.nextInt(33) + 1;//不能重复
+                //判断之前是否出现过
+                boolean tag = true;//默认不重复
+                for (int j = 0; j < i; j++) {
+                    if (a[j] == data) {
+                        tag=false;
+                        break;
+                    }
+                }
+                if(tag){
+                    a[i]=data;
+                    break;
+                }
+            }
+        }
+        a[a.length-1]=r.nextInt(16)+1;
+        return a;
+    }
+    public static  int[] user()
+    {
+        int [] a=new int[7];
+        Scanner sc=new Scanner(System.in);
+        for (int i = 0; i <a.length-1 ; i++) {
+            System.out.println("输入第"+(i+1)+"红球号码"+"(1-31)");
+            a[i]=sc.nextInt();
+        }
+        System.out.println("输入蓝球号码（1-16）");
+        a[a.length-1]=sc.nextInt();
+        return a;
+    }
+
+
+    public static void judge(int [] create,int [] user){
+        int count1=0;
+        int count2=0;
+        for (int i = 0; i < user.length-1; i++) {
+            for(int j=0;j<create.length-1;j++){
+
+                if(user[i]==create[j]) {
+
+                    count1++;
+                    break;
+                }
+            }
+        }
+        count2= user[user.length-1]==create[create.length-1] ? 1:0;
+
+        System.out.println("中奖号码");
+        print(create);
+        System.out.println("");
+        System.out.println("你的号码");
+        print(user);
+        System.out.println("");
+        System.out.println("你命中"+count1+"个红球"+count2+"个蓝球");
+        if(count2==1&&count1<=3)
+            System.out.println("5元");
+        else if (count2==1&&count1==3||count2==0&&count1==4)
+            System.out.println("五等奖10元");
+        else  if(count2==1&&count1==4||count2==0&&count1==5)
+            System.out.println("四等奖200元");
+        else if(count2==1&&count1==5)
+            System.out.println("三等奖3000元");
+        else if (count2==0&&count1==6)
+            System.out.println("二等奖500万元");
+        else if(count2==1&&count1==6)
+            System.out.println("一等奖1000万元");
+        else
+            System.out.println("谢谢参与");
+        }
+    }
+
+
+
+
+
